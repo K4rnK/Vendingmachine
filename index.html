@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clean Food Vending Machine Simulator</title>
+    <title>FRESH MATE - Clean Food Vending Machine Simulator</title>
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -14,9 +14,16 @@
             font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
         }
 
+        :root {
+            --brand-green: #4B7B47;
+            --brand-green-light: #5E8C5A;
+            --brand-bg: #EAE6DF;
+            --showcase-bg: #FFFFFF;
+        }
+
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: #D6D2C9;
+            color: #1A202C;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -28,10 +35,10 @@
         .vending-machine {
             display: flex;
             flex-direction: column;
-            background-color: #121820;
-            border: 8px solid #1e293b;
+            background-color: var(--brand-bg);
+            border: 4px solid #C4C0B7;
             border-radius: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             overflow: hidden;
             width: 100%;
             max-width: 980px;
@@ -40,77 +47,241 @@
 
         @media (min-width: 768px) {
             .vending-machine {
-                flex-direction: row;
-                height: 700px;
+                flex-direction: column;
+                height: 860px;
             }
         }
 
-        /* Left Section: Glass Showcase */
-        .showcase-section {
+        /* Brand Top Header Banner */
+        .brand-header {
+            background-color: white;
+            padding: 16px;
+            text-align: center;
+            border-bottom: 3px solid #DDD8CE;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .brand-logo-icon {
+            width: 36px;
+            height: 36px;
+            color: var(--brand-green);
+            margin-bottom: 4px;
+        }
+
+        .brand-title {
+            color: var(--brand-green);
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        /* Main Machine Layout Split: Left Screen / Right Showcase */
+        .machine-body {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .machine-body {
+                flex-direction: row;
+            }
+        }
+
+        /* Left Side: Touchscreen Unit */
+        .left-screen-section {
+            flex: 1.1;
+            background-color: var(--brand-bg);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 2px solid #D6D1C4;
+        }
+
+        .touch-display {
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            border: 3px solid #4B7B47;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            height: 540px;
+            overflow: hidden;
+        }
+
+        .screen-top-bar {
+            background-color: var(--brand-green);
+            color: white;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .screen-category-tabs {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .cat-tab {
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 8px;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cat-tab.active {
+            background: white;
+            color: var(--brand-green);
+            font-weight: 700;
+        }
+
+        .screen-menu-list {
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            background-color: #F8F7F4;
+        }
+
+        .menu-item-card {
+            background: white;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .menu-item-card:hover:not(.out-of-stock) {
+            border-color: var(--brand-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(75, 123, 71, 0.15);
+        }
+
+        .menu-item-card.selected {
+            border-color: var(--brand-green);
+            background-color: #F2F7F2;
+            box-shadow: 0 0 0 2px rgba(75, 123, 71, 0.3);
+        }
+
+        .menu-item-card.out-of-stock {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #F1F1F1;
+        }
+
+        .item-price-tag {
+            color: var(--brand-green);
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .screen-checkout-bar {
+            background-color: white;
+            padding: 12px 16px;
+            border-top: 2px solid #EAE6DF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slogan-left {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--brand-green);
+            letter-spacing: 1.5px;
+            text-align: center;
+        }
+
+        /* Right Side: Showcase Cabinet */
+        .right-showcase-section {
             flex: 1.25;
-            background: linear-gradient(135deg, #090d12, #142219);
-            border-bottom: 6px solid #1e293b;
+            background-color: white;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             padding: 20px 16px;
-            border-top: 4px solid #10b981;
-            box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.25);
-            min-height: 480px;
+            border-left: 3px solid #D6D1C4;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.04);
+            min-height: 520px;
         }
 
-        @media (min-width: 768px) {
-            .showcase-section {
-                border-bottom: none;
-                border-right: 6px solid #1e293b;
-            }
+        /* Glass Glow Overlay */
+        .glass-window {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 8px solid rgba(255, 255, 255, 0.7);
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.8), inset 0 0 50px rgba(75, 123, 71, 0.05);
+            pointer-events: none;
+            z-index: 10;
         }
 
-        .shelf {
+        .showcase-shelf {
             display: flex;
             justify-content: space-around;
             align-items: flex-end;
-            border-bottom: 5px solid #22c55e;
-            height: 85px;
+            border-bottom: 4px solid #E2DEC5;
+            height: 105px;
             position: relative;
             padding-bottom: 6px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 4px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(244,242,237,0.5));
         }
 
-        .item-slot {
-            width: 72px;
-            height: 65px;
-            background-color: rgba(255, 255, 255, 0.08);
+        .shelf-item-container {
+            width: 100px;
+            height: 88px;
+            background: white;
             border-radius: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            justify-content: space-between;
+            padding: 6px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
             position: relative;
         }
 
-        .item-slot span {
-            font-size: 26px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-        }
-
-        .item-slot .label {
-            font-size: 10px;
-            color: #e2e8f0;
-            margin-top: 2px;
-            font-weight: 600;
-            text-align: center;
-            line-height: 1.1;
-        }
-
-        .item-slot.empty {
+        .shelf-item-container.empty {
             opacity: 0.15;
-            background-color: transparent;
             border-style: dashed;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .shelf-item-container.empty * {
+            visibility: hidden;
+        }
+
+        .shelf-price-badge {
+            background-color: var(--brand-green);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 6px;
+            margin-top: 2px;
         }
 
         /* Elevator Tray Robot Arm */
@@ -118,205 +289,100 @@
             position: absolute;
             bottom: 20px;
             left: 16px;
-            width: 85px;
-            height: 32px;
-            background: linear-gradient(to right, #cbd5e1, #64748b);
-            border: 3px solid #10b981;
-            border-radius: 8px 8px 0 0;
+            width: 100px;
+            height: 30px;
+            background: linear-gradient(to right, #4B7B47, #5E8C5A);
+            border-radius: 6px 6px 0 0;
             transition: transform 1.2s cubic-bezier(0.45, 0.05, 0.55, 0.95);
             z-index: 20;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .elevator-tray .carrying-item {
-            font-size: 20px;
+            font-size: 24px;
             display: none;
         }
 
-        /* Right Section: Interactive Screen & Pickup Box */
-        .control-section {
-            flex: 1;
+        /* Bottom Pickup Area */
+        .pickup-section {
+            background-color: var(--brand-bg);
+            padding: 14px 16px;
+            border-top: 3px solid #D6D1C4;
             display: flex;
-            flex-direction: column;
-            background-color: #0f172a;
-            padding: 16px;
             justify-content: space-between;
+            align-items: center;
         }
 
-        .screen {
-            background-color: #f8fafc;
-            border-radius: 14px;
-            height: 470px;
-            border: 4px solid #334155;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        .screen-header {
-            background: linear-gradient(to right, #059669, #10b981);
-            color: white;
-            padding: 12px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 16px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .screen-body {
-            flex: 1;
-            padding: 12px;
-            overflow-y: auto;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .menu-card {
-            background: white;
-            border: 2px solid #e2e8f0;
+        .pickup-box {
+            width: 220px;
+            height: 70px;
+            background-color: #2D3748;
+            border: 3px solid #1A202C;
             border-radius: 10px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-        }
-
-        .menu-card:hover {
-            border-color: #10b981;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.15);
-        }
-
-        .menu-card.selected {
-            border-color: #10b981;
-            background-color: #ecfdf5;
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
-        }
-
-        .menu-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: #1e293b;
-            margin-top: 6px;
-            text-align: center;
-        }
-
-        .menu-price {
-            font-size: 13px;
-            color: #059669;
-            font-weight: 800;
-            margin-top: 2px;
-        }
-
-        .screen-footer {
-            background-color: #f1f5f9;
-            padding: 12px;
-            border-top: 2px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .total-price {
-            font-weight: 700;
-            color: #0f172a;
-            font-size: 15px;
-        }
-
-        .btn-pay {
-            background: linear-gradient(to right, #059669, #10b981);
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-        }
-
-        .btn-pay:hover:not(:disabled) {
-            filter: brightness(1.1);
-            transform: translateY(-1px);
-        }
-
-        .btn-pay:disabled {
-            background: #94a3b8;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        /* Bottom Right Delivery Port */
-        .pickup-container {
-            margin-top: 14px;
-            height: 125px;
-            background-color: #020617;
-            border: 3px solid #334155;
-            border-radius: 12px;
             position: relative;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow: hidden;
         }
 
         .pickup-door {
-            width: 92%;
-            height: 75px;
-            background: linear-gradient(to bottom, #10b981, #047857);
-            border-radius: 8px;
+            width: 90%;
+            height: 52px;
+            background: linear-gradient(to bottom, #4B7B47, #3B6338);
+            border-radius: 6px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 20px;
             font-weight: 800;
-            box-shadow: inset 0 2px 6px rgba(255,255,255,0.3), 0 4px 6px rgba(0,0,0,0.3);
-            letter-spacing: 2px;
-            position: relative;
-            transition: all 0.4s ease;
+            font-size: 13px;
+            letter-spacing: 1px;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
         }
 
         .pickup-door.glow {
             animation: pulse-green 1s infinite alternate;
+            cursor: pointer;
         }
 
         @keyframes pulse-green {
-            from { box-shadow: 0 0 5px #10b981, inset 0 0 5px #fff; }
-            to { box-shadow: 0 0 25px #10b981, inset 0 0 15px #fff; }
+            from { box-shadow: 0 0 5px #4B7B47, inset 0 0 5px #fff; }
+            to { box-shadow: 0 0 20px #4B7B47, inset 0 0 12px #fff; }
         }
 
         .dispensed-item {
             position: absolute;
-            font-size: 42px;
+            font-size: 38px;
             cursor: pointer;
-            animation: drop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: drop-in 0.4s ease-out;
             z-index: 30;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
         }
 
         @keyframes drop-in {
-            0% { transform: translateY(-40px) scale(0.4); opacity: 0; }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
+            0% { transform: translateY(-30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
 
-        /* Modal Overlay for Payment */
+        .side-slogans {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--brand-green);
+            letter-spacing: 1px;
+            line-height: 1.4;
+            text-align: right;
+        }
+
+        /* Modal styling */
         .modal {
             display: none;
-            position: absolute;
+            position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
             z-index: 100;
             justify-content: center;
@@ -325,165 +391,251 @@
 
         .modal-content {
             background: white;
-            color: #0f172a;
+            color: #1A202C;
             padding: 24px;
             border-radius: 16px;
             text-align: center;
-            width: 85%;
-            max-width: 340px;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);
-        }
-
-        .qr-placeholder {
-            width: 130px;
-            height: 130px;
-            background: #f8fafc;
-            margin: 14px auto;
-            border: 2px dashed #94a3b8;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-size: 13px;
-            color: #64748b;
+            width: 90%;
+            max-width: 330px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
         }
     </style>
 </head>
 <body>
 
 <div class="vending-machine">
-    <!-- Left Section: Clean Food Showcase -->
-    <div class="showcase-section" id="showcase">
-        <!-- Shelf 4 (Top) -->
-        <div class="shelf" data-shelf="4">
-            <div class="item-slot" id="slot-1"><span>🥗</span><div class="label">สลัดอกไก่</div></div>
-            <div class="item-slot" id="slot-2"><span>🥗</span><div class="label">สลัดอกไก่</div></div>
-            <div class="item-slot" id="slot-3"><span>🥑</span><div class="label">สลัดอะโวคาโด</div></div>
-        </div>
-        <!-- Shelf 3 -->
-        <div class="shelf" data-shelf="3">
-            <div class="item-slot" id="slot-4"><span>🥑</span><div class="label">สลัดอะโวคาโด</div></div>
-            <div class="item-slot" id="slot-5"><span>🍣</span><div class="label">ข้าวไรซ์แซลมอน</div></div>
-            <div class="item-slot" id="slot-6"><span>🍣</span><div class="label">ข้าวไรซ์แซลมอน</div></div>
-        </div>
-        <!-- Shelf 2 -->
-        <div class="shelf" data-shelf="2">
-            <div class="item-slot" id="slot-7"><span>🍌</span><div class="label">กล้วยหอมคลีน</div></div>
-            <div class="item-slot" id="slot-8"><span>🍌</span><div class="label">กล้วยหอมคลีน</div></div>
-            <div class="item-slot" id="slot-9"><span>🥪</span><div class="label">แซนด์วิชโฮลวีต</div></div>
-        </div>
-        <!-- Shelf 1 (Bottom) -->
-        <div class="shelf" data-shelf="1">
-            <div class="item-slot" id="slot-10"><span>🥪</span><div class="label">แซนด์วิชโฮลวีต</div></div>
-            <div class="item-slot" id="slot-11"><span>🥤</span><div class="label">น้ำผลไม้สกัดเย็น</div></div>
-            <div class="item-slot" id="slot-12"><span>🥤</span><div class="label">น้ำผลไม้สกัดเย็น</div></div>
-        </div>
-
-        <!-- Robot Elevator Arm / Tray -->
-        <div class="elevator-tray" id="elevator">
-            <span class="carrying-item" id="tray-item"></span>
-        </div>
+    <!-- Brand Header -->
+    <div class="brand-header">
+        <svg class="brand-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M6.75 3v2.25M6.75 3v2.25M6.75 7.5V12m0 0a2.25 2.25 0 002.25 2.25h0A2.25 2.25 0 0011.25 12V3M17.25 3v18M6.75 14.25V21" />
+        </svg>
+        <div class="brand-title">FRESH MATE</div>
     </div>
 
-    <!-- Right Section: Touch Screen & Delivery Port -->
-    <div class="control-section">
-        <!-- Touch Screen -->
-        <div class="screen">
-            <div class="screen-header">🥗 สินค้าอาหารคลีนเพื่อสุขภาพ</div>
-            <div class="screen-body" id="menu-container">
-                <!-- Dynamic Menu Cards Populated via JS -->
+    <!-- Main Machine Body -->
+    <div class="machine-body">
+
+        <!-- Left Side: Interactive Screen Panel -->
+        <div class="left-screen-section">
+            <div class="touch-display">
+                <!-- Screen Header & Navigation -->
+                <div class="screen-top-bar">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-sm">🥗 FRESH MATE | Daily Harvest</span>
+                        <button onclick="restockItems()" class="text-[10px] bg-white text-green-800 font-bold px-2 py-0.5 rounded shadow">เติมสินค้า</button>
+                    </div>
+                    <div class="screen-category-tabs">
+                        <div class="cat-tab active">Fresh Salads</div>
+                        <div class="cat-tab">Protein Bowls</div>
+                        <div class="cat-tab">Healthy Snacks</div>
+                    </div>
+                </div>
+
+                <!-- Product Catalog Screen -->
+                <div class="screen-menu-list" id="menu-container">
+                    <!-- Populated via JavaScript -->
+                </div>
+
+                <!-- Screen Footer Payment Bar -->
+                <div class="screen-checkout-bar">
+                    <div>
+                        <div class="text-xs text-slate-500 font-semibold">ยอดชำระ</div>
+                        <div class="text-lg font-black text-emerald-700"><span id="total-amount">0</span> ฿</div>
+                    </div>
+                    <button class="bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-300 text-white font-bold py-2 px-5 rounded-lg text-sm transition" id="pay-btn" onclick="openPayment()" disabled>
+                        ชำระเงิน
+                    </button>
+                </div>
             </div>
-            <div class="screen-footer">
-                <div class="total-price">รวม: <span id="total-amount" class="text-emerald-600 text-lg">0</span> ฿</div>
-                <button class="btn-pay" id="pay-btn" onclick="openPayment()" disabled>ชำระเงิน</button>
+
+            <!-- Bottom Left Slogan -->
+            <div class="slogan-left">EAT FRESH, LIVE FRESH</div>
+        </div>
+
+        <!-- Right Side: Illuminated Showcase Cabinet -->
+        <div class="right-showcase-section" id="showcase">
+            <div class="glass-window"></div>
+
+            <!-- Shelf 4 (Top Shelf) -->
+            <div class="showcase-shelf" data-shelf="4">
+                <div class="shelf-item-container" id="slot-1">
+                    <div class="text-2xl">🍱</div>
+                    <div class="text-[10px] font-bold text-center leading-tight">Chicken breast + rice</div>
+                    <div class="shelf-price-badge">69 ฿</div>
+                </div>
+                <div class="shelf-item-container" id="slot-2">
+                    <div class="text-2xl">🍲</div>
+                    <div class="text-[10px] font-bold text-center leading-tight">Japanese chicken teriyaki bowl</div>
+                    <div class="shelf-price-badge">79 ฿</div>
+                </div>
+            </div>
+
+            <!-- Shelf 3 -->
+            <div class="showcase-shelf" data-shelf="3">
+                <div class="shelf-item-container" id="slot-3">
+                    <div class="text-2xl">🥗</div>
+                    <div class="text-[10px] font-bold text-center leading-tight">Tuna and egg salad</div>
+                    <div class="shelf-price-badge">55 ฿</div>
+                </div>
+                <div class="shelf-item-container" id="slot-4">
+                    <div class="text-2xl">🥚</div>
+                    <div class="text-[10px] font-bold text-center leading-tight">Boiled eggs (x3)</div>
+                    <div class="shelf-price-badge">30 ฿</div>
+                </div>
+            </div>
+
+            <!-- Shelf 2 -->
+            <div class="showcase-shelf" data-shelf="2">
+                <div class="shelf-item-container" id="slot-5">
+                    <div class="text-2xl">🥪</div>
+                    <div class="text-[10px] font-bold text-center leading-tight">Whole wheat sandwich</div>
+                    <div class="shelf-price-badge">55 ฿</div>
+                </div>
+                <div class="shelf-item-container" id="slot-6">
+                    <div class="text-2xl">🍔</div>
+                    <div class="text-[10px] font-bold text-center leading-tight">Grilled chicken breast burger</div>
+                    <div class="shelf-price-badge">69 ฿</div>
+                </div>
+            </div>
+
+            <!-- Shelf 1 (Bottom Shelf) -->
+            <div class="showcase-shelf" data-shelf="1">
+                <div class="shelf-item-container" id="slot-7">
+                    <div class="text-2xl">🥪</div>
+                    <div class="text-[10px] font-bold text-center leading-tight">Whole wheat sandwich</div>
+                    <div class="shelf-price-badge">55 ฿</div>
+                </div>
+                <div class="shelf-item-container" id="slot-8">
+                    <div class="text-2xl">🍔</div>
+                    <div class="text-[10px] font-bold text-center leading-tight">Grilled chicken breast burger</div>
+                    <div class="shelf-price-badge">69 ฿</div>
+                </div>
+            </div>
+
+            <!-- Elevator Robot Arm -->
+            <div class="elevator-tray" id="elevator">
+                <span class="carrying-item" id="tray-item"></span>
             </div>
         </div>
 
-        <!-- Bottom Right Delivery Port (Thai Label) -->
-        <div class="pickup-container">
+    </div>
+
+    <!-- Bottom Section: Pickup Box & Slogans -->
+    <div class="pickup-section">
+        <div class="pickup-box">
             <div class="pickup-door" id="pickup-door">ช่องรับสินค้า</div>
             <div id="pickup-area"></div>
         </div>
-    </div>
-
-    <!-- Simulated Payment Modal -->
-    <div class="modal" id="payment-modal">
-        <div class="modal-content">
-            <h3 class="font-bold text-lg">สแกน QR Code เพื่อชำระเงิน</h3>
-            <div class="qr-placeholder">
-                <span class="text-3xl mb-1">📱</span>
-                <span>[ PromptPay QR ]</span>
-            </div>
-            <p class="text-sm text-slate-600">ยอดชำระ: <strong id="modal-price" class="text-emerald-600 text-base">0</strong> บาท</p>
-            <button class="btn-pay w-full mt-4" onclick="processOrder()">จำลองการจ่ายเงินสำเร็จ</button>
+        <div class="side-slogans">
+            <div>24HR ACCESS</div>
+            <div>STUDENT FRIENDLY PRICING</div>
         </div>
     </div>
 </div>
 
+<!-- Modal: PromptPay QR Payment -->
+<div class="modal" id="payment-modal">
+    <div class="modal-content">
+        <h3 class="font-bold text-base text-slate-800">สแกน QR Code เพื่อชำระเงิน</h3>
+        <div class="w-32 h-32 bg-slate-100 border-2 border-dashed border-slate-400 rounded-xl mx-auto my-3 flex flex-col items-center justify-center text-slate-500">
+            <span class="text-3xl mb-1">📱</span>
+            <span class="text-[10px] font-bold">PROMPTPAY QR</span>
+        </div>
+        <p class="text-xs text-slate-600">ยอดรวม: <strong id="modal-price" class="text-emerald-700 text-sm">0</strong> บาท</p>
+        <div class="flex gap-2 mt-4">
+            <button class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-lg text-xs" onclick="closePayment()">ยกเลิก</button>
+            <button class="w-1/2 bg-emerald-700 text-white font-bold py-2 rounded-lg text-xs" onclick="processOrder()">จ่ายเงินสำเร็จ</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Alert Replacement -->
+<div class="modal" id="alert-modal">
+    <div class="modal-content">
+        <div id="alert-icon" class="text-3xl mb-2">🥗</div>
+        <h3 id="alert-title" class="font-bold text-base text-slate-800 mb-1">แจ้งเตือน</h3>
+        <p id="alert-msg" class="text-xs text-slate-600 mb-4"></p>
+        <button class="w-full bg-emerald-700 text-white font-bold py-2 rounded-lg text-xs" onclick="closeAlert()">ตกลง</button>
+    </div>
+</div>
+
 <script>
-    // Clean Food Product Inventory Data
+    // Exact menu inventory as per user specifications
     const products = [
-        { id: 1, name: 'สลัดอกไก่', price: 89, icon: '🥗', slots: [1, 2] },
-        { id: 2, name: 'สลัดอะโวคาโด', price: 95, icon: '🥑', slots: [3, 4] },
-        { id: 3, name: 'ข้าวไรซ์แซลมอน', price: 129, icon: '🍣', slots: [5, 6] },
-        { id: 4, name: 'กล้วยหอมคลีน', price: 25, icon: '🍌', slots: [7, 8] },
-        { id: 5, name: 'แซนด์วิชโฮลวีต', price: 55, icon: '🥪', slots: [9, 10] },
-        { id: 6, name: 'น้ำผลไม้สกัดเย็น', price: 45, icon: '🥤', slots: [11, 12] }
+        { id: 1, name: 'Chicken breast + rice', price: 69, icon: '🍱', slots: [1] },
+        { id: 2, name: 'Japanese chicken teriyaki bowl', price: 79, icon: '🍲', slots: [2] },
+        { id: 3, name: 'Tuna and egg salad', price: 55, icon: '🥗', slots: [3] },
+        { id: 4, name: 'Boiled eggs (x3)', price: 30, icon: '🥚', slots: [4] },
+        { id: 5, name: 'Whole wheat sandwich', price: 55, icon: '🥪', slots: [5, 7] },
+        { id: 6, name: 'Grilled chicken breast burger', price: 69, icon: '🍔', slots: [6, 8] }
     ];
 
     let selectedProduct = null;
     let isProcessing = false;
 
-    function initMenu() {
+    function renderMenu() {
         const menuContainer = document.getElementById('menu-container');
         menuContainer.innerHTML = '';
-        
+
         products.forEach(p => {
+            const stockCount = p.slots.filter(slotId => {
+                const el = document.getElementById(`slot-${slotId}`);
+                return el && !el.classList.contains('empty');
+            }).length;
+
             const card = document.createElement('div');
-            card.className = 'menu-card';
-            card.onclick = () => selectProduct(p, card);
+            card.className = `menu-item-card ${stockCount === 0 ? 'out-of-stock' : ''}`;
+            if (selectedProduct && selectedProduct.id === p.id) {
+                card.classList.add('selected');
+            }
+
+            card.onclick = () => {
+                if (stockCount > 0) selectProduct(p, card);
+                else showAlert('สินค้าหมด', 'ขออภัย สินค้าชิ้นนี้หมดแล้ว');
+            };
+
             card.innerHTML = `
-                <div style="font-size:32px;">${p.icon}</div>
-                <div class="menu-title">${p.name}</div>
-                <div class="menu-price">${p.price} ฿</div>
+                <div class="text-3xl mt-1">${p.icon}</div>
+                <div class="font-bold text-[11px] text-center text-slate-800 mt-1 line-clamp-2">${p.name}</div>
+                <div class="item-price-tag mt-auto">${p.price} ฿</div>
             `;
             menuContainer.appendChild(card);
         });
     }
 
-    // Product Selection Handler
     function selectProduct(product, cardElement) {
         if (isProcessing) return;
 
-        document.querySelectorAll('.menu-card').forEach(c => c.classList.remove('selected'));
+        document.querySelectorAll('.menu-item-card').forEach(c => c.classList.remove('selected'));
         selectedProduct = product;
         cardElement.classList.add('selected');
-        
+
         document.getElementById('total-amount').innerText = product.price;
         document.getElementById('pay-btn').disabled = false;
     }
 
-    // Open Payment Modal
     function openPayment() {
         if (!selectedProduct) return;
         document.getElementById('modal-price').innerText = selectedProduct.price;
         document.getElementById('payment-modal').style.display = 'flex';
     }
 
-    function processOrder() {
+    function closePayment() {
         document.getElementById('payment-modal').style.display = 'none';
+    }
+
+    function processOrder() {
+        closePayment();
         isProcessing = true;
         document.getElementById('pay-btn').disabled = true;
 
-        // Find available slot with item
         const availableSlotId = selectedProduct.slots.find(id => {
             const slotEl = document.getElementById(`slot-${id}`);
-            return !slotEl.classList.contains('empty');
+            return slotEl && !slotEl.classList.contains('empty');
         });
 
         if (!availableSlotId) {
-            alert('สินค้าชิ้นนี้หมดแล้ว!');
+            showAlert('สินค้าหมด', 'ขออภัย สินค้าชิ้นนี้หมดเรียบร้อยแล้ว');
             resetState();
             return;
         }
@@ -493,36 +645,33 @@
         const elevator = document.getElementById('elevator');
         const trayItem = document.getElementById('tray-item');
 
-        // Calculate positions for elevator animation
         const shelfRect = shelfEl.getBoundingClientRect();
         const showcaseRect = document.getElementById('showcase').getBoundingClientRect();
         const slotRect = slotEl.getBoundingClientRect();
 
         const targetX = slotRect.left - showcaseRect.left;
 
-        // Step 1: Move Elevator Tray to Shelf Slot
+        // Step 1: Move Robot Tray to target shelf item
         elevator.style.transform = `translate(${targetX}px, -${showcaseRect.bottom - shelfRect.bottom}px)`;
 
         setTimeout(() => {
-            // Step 2: Item drops onto tray
+            // Step 2: Retrieve product into tray
             slotEl.classList.add('empty');
-            slotEl.querySelector('span').style.visibility = 'hidden';
             trayItem.innerText = selectedProduct.icon;
             trayItem.style.display = 'block';
 
             setTimeout(() => {
-                // Step 3: Transport tray down to bottom right delivery position
-                elevator.style.transform = `translate(${showcaseRect.width - 95}px, 0px)`;
+                // Step 3: Move elevator tray down to pickup port position
+                elevator.style.transform = `translate(10px, 0px)`;
 
                 setTimeout(() => {
-                    // Step 4: Dispense item into bottom right pickup tray
+                    // Step 4: Dispense product into pickup box
                     trayItem.style.display = 'none';
                     elevator.style.transform = `translate(0px, 0px)`;
-
                     dispenseToPickupBox(selectedProduct.icon);
-                }, 1300);
-            }, 600);
-        }, 1300);
+                }, 1200);
+            }, 500);
+        }, 1200);
     }
 
     function dispenseToPickupBox(icon) {
@@ -534,11 +683,11 @@
         const itemEl = document.createElement('div');
         itemEl.className = 'dispensed-item';
         itemEl.innerText = icon;
-        itemEl.title = 'กดเพื่อรับสินค้า';
+        itemEl.title = 'คลิกเพื่อรับสินค้า';
         itemEl.onclick = () => {
             itemEl.remove();
             door.classList.remove('glow');
-            alert('รับสินค้าเรียบร้อย! ขอให้มีความสุขกับการรับประทานอาหารคลีนครับ 🥗✨');
+            showAlert('รับสินค้าเรียบร้อย!', 'ขอบคุณที่ใช้บริการ FRESH MATE ขอให้มีความสุขกับการรับประทานอาหารครับ 🥗✨');
             resetState();
         };
 
@@ -549,12 +698,31 @@
         selectedProduct = null;
         isProcessing = false;
         document.getElementById('total-amount').innerText = '0';
-        document.querySelectorAll('.menu-card').forEach(c => c.classList.remove('selected'));
         document.getElementById('pay-btn').disabled = true;
+        renderMenu();
     }
 
-    // Initialize Menu
-    initMenu();
+    function restockItems() {
+        for (let i = 1; i <= 8; i++) {
+            const slot = document.getElementById(`slot-${i}`);
+            if (slot) slot.classList.remove('empty');
+        }
+        resetState();
+        showAlert('เติมสินค้าแล้ว', 'เติมสินค้าเต็มตู้เรียบร้อยครับ');
+    }
+
+    function showAlert(title, msg) {
+        document.getElementById('alert-title').innerText = title;
+        document.getElementById('alert-msg').innerText = msg;
+        document.getElementById('alert-modal').style.display = 'flex';
+    }
+
+    function closeAlert() {
+        document.getElementById('alert-modal').style.display = 'none';
+    }
+
+    // Initialize Menu Display
+    renderMenu();
 </script>
 </body>
 </html>
